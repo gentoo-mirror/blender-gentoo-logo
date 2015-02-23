@@ -89,9 +89,9 @@ src_install() {
 	doexe ${S}/release/plugins/sequence/*.so
 
 	insinto /usr/share/pixmaps
-	doins ${FILESDIR}/${PN}.png
+	newins ${FILESDIR}/${P}.png ${PN}.png
 	insinto /usr/share/applications
-	doins ${FILESDIR}/${PN}.desktop
+	doins ${FILESDIR}/${P}.desktop
 
 	dodoc COPYING INSTALL README release_2*
 
