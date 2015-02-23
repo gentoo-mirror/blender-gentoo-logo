@@ -19,6 +19,7 @@ LICENSE="|| ( GPL-2 BL )"
 KEYWORDS="~x86 ~ppc"
 
 DEPEND="virtual/x11
+	dev-lang/python:2.2
 	>=media-libs/openal-20020127
 	>=media-libs/libsdl-1.2
 	>=media-libs/libvorbis-1.0
@@ -28,4 +29,8 @@ RDEPEND="${DEPEND}"
 src_prepare() {
 	epatch "${FILESDIR}"/${P}-compile-*.patch
 	eautoreconf
+}
+
+src_configure() {
+	PYTHON=python2.2 econf
 }

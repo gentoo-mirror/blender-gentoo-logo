@@ -20,6 +20,7 @@ LICENSE="|| ( GPL-2 BL )"
 KEYWORDS="~x86 ~ppc"
 
 DEPEND="virtual/x11
+	dev-lang/python:2.2
 	blender-game? ( dev-games/ode )
 	sdl? ( media-libs/libsdl )
 	jpeg? ( media-libs/jpeg )
@@ -73,7 +74,7 @@ src_configure() {
 	# Build the plugin (Will fail, requires gameblender)
 	# use blender-plugin && myconf="${myconf} --enable-blenderplugin"
 
-	econf ${myconf} || die
+	PYTHON=python2.2 econf ${myconf} || die
 }
 
 src_compile() {
