@@ -19,16 +19,18 @@ SLOT="0"
 LICENSE="|| ( GPL-2 BL )"
 KEYWORDS="~x86 ~ppc"
 
-DEPEND="virtual/x11
+DEPEND="x11-libs/libX11
+	media-libs/glu
+	media-libs/mesa
 	dev-lang/python:2.2
 	blender-game? ( dev-games/ode )
 	sdl? ( media-libs/libsdl )
 	jpeg? ( media-libs/jpeg )
 	png? ( media-libs/libpng )
-	mozilla? ( net-www/mozilla )
+	mozilla? ( www-client/seamonkey )
 	truetype? ( >=media-libs/freetype-2.0 )
 	fmod? ( media-libs/fmod )
-	>=media-libs/openal-20020127
+	media-libs/openal
 	>=media-libs/libsdl-1.2
 	>=media-libs/libvorbis-1.0
 	>=dev-libs/openssl-0.9.6"
