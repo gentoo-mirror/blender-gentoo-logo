@@ -1,0 +1,136 @@
+From 1c0917966080ef313924a76fe4bb399b667b2979 Mon Sep 17 00:00:00 2001
+From: Sebastian Pipping <sebastian@pipping.org>
+Date: Thu, 28 Apr 2011 18:40:05 +0200
+Subject: [PATCH 5/6] Python: Replace with to _with (reserved keyword by now)
+
+---
+ intern/python/modules/TextTools/TextTools.py | 32 ++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 16 deletions(-)
+
+diff --git a/intern/python/modules/TextTools/TextTools.py b/intern/python/modules/TextTools/TextTools.py
+index 7eae2bc..d3a8262 100644
+--- a/intern/python/modules/TextTools/TextTools.py
++++ b/intern/python/modules/TextTools/TextTools.py
+@@ -166,7 +166,7 @@ def word_in_list(l):
+ # Extra stuff useful in combination with the C functions
+ #
+ 
+-def replace(text,what,with,start=0,stop=None,
++def replace(text,what,_with,start=0,stop=None,
+ 
+ 	    SearchObject=BMS,join=join,joinlist=joinlist,tag=tag,
+ 	    string_replace=string.replace,type=type,
+@@ -187,11 +187,11 @@ def replace(text,what,with,start=0,stop=None,
+ 	what = so.match
+     if stop is None:
+ 	if start == 0 and len(what) < 2:
+-	    return string_replace(text,what,with)
++	    return string_replace(text,what,_with)
+ 	stop = len(text)
+     t = ((text,sWordStart,so,+2),
+ 	 # Found something, replace and continue searching
+-	 (with,Skip+AppendTagobj,len(what),-1,-1),
++	 (_with,Skip+AppendTagobj,len(what),-1,-1),
+ 	 # Rest of text
+ 	 (text,Move,ToEOF)
+ 	 )
+@@ -202,7 +202,7 @@ def replace(text,what,with,start=0,stop=None,
+ 
+ # Alternative (usually slower) versions using different techniques:
+ 
+-def _replace2(text,what,with,start=0,stop=None,
++def _replace2(text,what,_with,start=0,stop=None,
+ 
+ 	      join=join,joinlist=joinlist,tag=tag,
+ 	      StringType=types.StringType,BMS=BMS):
+@@ -221,13 +221,13 @@ def _replace2(text,what,with,start=0,stop=None,
+ 	stop = len(text)
+     if type(what) == StringType:
+ 	what=BMS(what)
+-    t = ((with,sFindWord,what,+1,+0),)
++    t = ((_with,sFindWord,what,+1,+0),)
+     found,taglist,last = tag(text,t,start,stop)
+     if not found: 
+ 	return text
+     return join(joinlist(text,taglist))
+ 
+-def _replace3(text,what,with,
++def _replace3(text,what,_with,
+ 
+ 	      join=string.join,FS=FS,
+ 	      StringType=types.StringType):
+@@ -240,12 +240,12 @@ def _replace3(text,what,with,
+     l = []
+     x = 0
+     for left,right in slices:
+-	l.append(text[x:left] + with)
++	l.append(text[x:left] + _with)
+ 	x = right
+     l.append(text[x:])
+     return join(l,'')
+ 
+-def _replace4(text,what,with,
++def _replace4(text,what,_with,
+ 
+ 	      join=join,joinlist=joinlist,tag=tag,FS=FS,
+ 	      StringType=types.StringType):
+@@ -257,7 +257,7 @@ def _replace4(text,what,with,
+ 	return text
+     repl = [None]*len(slices)
+     for i in range(len(slices)):
+-	repl[i] = (with,)+slices[i]
++	repl[i] = (_with,)+slices[i]
+     return join(joinlist(text,repl))
+ 
+ 
+@@ -529,16 +529,16 @@ def _bench(file='mxTextTools/mxTextTools.c'):
+ 	print 'Replacing strings'
+ 	print '-'*72
+ 	print
+-	for what,with in (('m','M'),('mx','MX'),('mxText','MXTEXT'),
++	for what,_with in (('m','M'),('mx','MX'),('mxText','MXTEXT'),
+ 			  ('hmm','HMM'),('hmmm','HMM'),('hmhmm','HMM')):
+-	    print 'Replace "%s" with "%s"' % (what,with)
++	    print 'Replace "%s" with "%s"' % (what,_with)
+ 	    t.start()
+ 	    for i in range(100):
+-		rtext = string.replace(text,what,with)
++		rtext = string.replace(text,what,_with)
+ 	    print 'with string.replace:',t.stop(),'sec.'
+ 	    t.start()
+ 	    for i in range(100):
+-		ttext = replace(text,what,with)
++		ttext = replace(text,what,_with)
+ 	    print 'with tag.replace:',t.stop(),'sec.'
+ 	    if ttext != rtext:
+ 		print 'results are NOT ok !'
+@@ -546,7 +546,7 @@ def _bench(file='mxTextTools/mxTextTools.c'):
+ 		mismatch(rtext,ttext)
+ 	    t.start()
+ 	    for i in range(100):
+-		ttext = _replace2(text,what,with)
++		ttext = _replace2(text,what,_with)
+ 	    print 'with tag._replace2:',t.stop(),'sec.'
+ 	    if ttext != rtext:
+ 		print 'results are NOT ok !'
+@@ -554,7 +554,7 @@ def _bench(file='mxTextTools/mxTextTools.c'):
+ 		print rtext
+ 	    t.start()
+ 	    for i in range(100):
+-		ttext = _replace3(text,what,with)
++		ttext = _replace3(text,what,_with)
+ 	    print 'with tag._replace3:',t.stop(),'sec.'
+ 	    if ttext != rtext:
+ 		print 'results are NOT ok !'
+@@ -562,7 +562,7 @@ def _bench(file='mxTextTools/mxTextTools.c'):
+ 		print rtext
+ 	    t.start()
+ 	    for i in range(100):
+-		ttext = _replace4(text,what,with)
++		ttext = _replace4(text,what,_with)
+ 	    print 'with tag._replace4:',t.stop(),'sec.'
+ 	    if ttext != rtext:
+ 		print 'results are NOT ok !'
+-- 
+2.2.1
+

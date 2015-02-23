@@ -1,0 +1,33 @@
+From c2c4a755a94af37774d31cf96ce92b19b59278bc Mon Sep 17 00:00:00 2001
+From: Sebastian Pipping <sebastian@pipping.org>
+Date: Thu, 28 Apr 2011 19:49:52 +0200
+Subject: [PATCH 1/6] Fix configure.ac
+
+---
+ configure.ac | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 04b90c3..84366f3 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -11,7 +11,7 @@ dnl --------------------
+ 
+   AC_INIT(blender-creator, 2.26, )
+   AC_CANONICAL_SYSTEM
+-  AM_INIT_AUTOMAKE([blender-creator], [2.26])
++  AM_INIT_AUTOMAKE([foreign])
+ 
+ dnl check for the platform make
+ AC_PATH_PROGS(U_MAKE, gmake gnumake, make)
+@@ -26,7 +26,6 @@ dnl -------------------
+   AC_PROG_CC
+   AC_PROG_LN_S
+   AC_PROG_LIBTOOL
+-  AC_PROG_RANLIB
+   AC_CHECK_TOOL([STRIP],[strip])
+   AC_PROG_AWK
+   AC_FIND_X
+-- 
+2.2.1
+

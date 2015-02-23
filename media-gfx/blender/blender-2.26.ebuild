@@ -4,7 +4,7 @@
 
 EAPI="5"
 
-inherit flag-o-matic
+inherit autotools eutils flag-o-matic
 replace-flags -march=pentium4 -march=pentium3
 
 IUSE=""
@@ -24,4 +24,7 @@ DEPEND="virtual/x11
 	>=media-libs/libvorbis-1.0
 	>=dev-libs/openssl-0.9.6"
 
+src_prepare() {
+	epatch "${FILESDIR}"/${P}-compile-*.patch
+	eautoreconf
 }

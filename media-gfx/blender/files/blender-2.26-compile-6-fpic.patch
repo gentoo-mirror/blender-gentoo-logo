@@ -1,0 +1,24 @@
+From 146b1b36f040ed6b68c30a7697b12627d8542c8b Mon Sep 17 00:00:00 2001
+From: Sebastian Pipping <sebastian@pipping.org>
+Date: Thu, 28 Apr 2011 19:50:30 +0200
+Subject: [PATCH 6/6] Add -fPIC
+
+---
+ source/blender/bpython/Makefile.am | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/source/blender/bpython/Makefile.am b/source/blender/bpython/Makefile.am
+index 081ee5a..e86d4ad 100644
+--- a/source/blender/bpython/Makefile.am
++++ b/source/blender/bpython/Makefile.am
+@@ -1,6 +1,6 @@
+ noinst_LTLIBRARIES = libblender_bpython.la
+ 
+-libblender_bpython_la_CFLAGS = -DFUTURE_PYTHON_API
++libblender_bpython_la_CFLAGS = -fPIC -DFUTURE_PYTHON_API
+ 
+ libblender_bpython_la_LDFLAGS = -static \
+ 	-L@PYTHONSYSPREFIX@/lib/python@PYTHON_VERSION@/config \
+-- 
+2.2.1
+
