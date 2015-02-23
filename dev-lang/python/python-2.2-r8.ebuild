@@ -14,7 +14,7 @@ PYVER="${PYVER_MAJOR}.${PYVER_MINOR}"
 
 DESCRIPTION="A really great language"
 HOMEPAGE="http://www.python.org"
-SRC_URI="http://www.python.org/ftp/python/${PV}/Python-${PV}.tgz"
+SRC_URI="https://www.python.org/ftp/python/${PV}/Python-${PV}.tgz"
 
 SLOT="2.2"
 LICENSE="PSF-2.2"
