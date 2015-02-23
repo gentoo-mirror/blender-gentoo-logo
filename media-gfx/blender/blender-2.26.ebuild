@@ -23,6 +23,7 @@ DEPEND="virtual/x11
 	>=media-libs/libsdl-1.2
 	>=media-libs/libvorbis-1.0
 	>=dev-libs/openssl-0.9.6"
+RDEPEND="${DEPEND}"
 
 src_prepare() {
 	epatch "${FILESDIR}"/${P}-compile-*.patch
