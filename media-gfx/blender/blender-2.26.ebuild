@@ -16,7 +16,7 @@ SRC_URI="http://download.blender.org/source/${P}.tar.bz2"
 
 SLOT="0"
 LICENSE="|| ( GPL-2 BL )"
-KEYWORDS="~x86 ~ppc"
+KEYWORDS="~amd64 ~x86"
 
 DEPEND="x11-libs/libX11
 	media-libs/glu
