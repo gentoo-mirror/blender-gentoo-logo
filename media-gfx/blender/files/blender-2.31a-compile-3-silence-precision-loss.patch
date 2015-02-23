@@ -1,0 +1,48 @@
+From 7d6c0bb6e17c34806d9dd5d558eb25c7cc7de0fa Mon Sep 17 00:00:00 2001
+From: Sebastian Pipping <sebastian@pipping.org>
+Date: Thu, 28 Apr 2011 19:20:14 +0200
+Subject: [PATCH 3/6] C++: Silence precision loss, may need better fix
+
+---
+ source/blender/render/intern/source/RE_basicShadowBuffer.cpp | 4 ++--
+ source/kernel/gen_system/GEN_HashedPtr.h                     | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/source/blender/render/intern/source/RE_basicShadowBuffer.cpp b/source/blender/render/intern/source/RE_basicShadowBuffer.cpp
+index b5b37e1..f6e181f 100644
+--- a/source/blender/render/intern/source/RE_basicShadowBuffer.cpp
++++ b/source/blender/render/intern/source/RE_basicShadowBuffer.cpp
+@@ -364,7 +364,7 @@ float RE_BasicShadowBuffer::readshadowbuf(struct ShadBuf *shb,
+ 	else {
+ 		/* got warning on this from DEC alpha (64 bits).... */
+ 		/* but it's working code! (ton) */
+- 		zsamp= (int) rz;
++		zsamp= (int)(long) rz;
+ 	}
+ 
+ 	if(zsamp > zs) return 1.0; 		/* absolute no shadow */
+@@ -547,7 +547,7 @@ float RE_BasicShadowBuffer::readshadowbuf_halo(struct ShadBuf *shb, int xs, int
+ 	else {
+ 		/* same as before */
+ 		/* still working code! (ton) */
+- 		zsamp= (int) rz;
++		zsamp= (int) (long) rz;
+ 	}
+ 
+ 	/* NO schadow when sampled at 'eternal' distance */
+diff --git a/source/kernel/gen_system/GEN_HashedPtr.h b/source/kernel/gen_system/GEN_HashedPtr.h
+index 39662ce..8ce30f0 100644
+--- a/source/kernel/gen_system/GEN_HashedPtr.h
++++ b/source/kernel/gen_system/GEN_HashedPtr.h
+@@ -40,7 +40,7 @@ class GEN_HashedPtr
+ 	void* m_valptr;
+ public:
+ 	GEN_HashedPtr(void* val) : m_valptr(val) {};
+-	unsigned int hash() const { return GEN_Hash((unsigned int) m_valptr);};
++	unsigned int hash() const { return GEN_Hash((unsigned int)(unsigned long) m_valptr);};
+ 	inline friend bool operator ==(const GEN_HashedPtr & rhs, const GEN_HashedPtr & lhs) { return rhs.m_valptr == lhs.m_valptr;};
+ };
+ 
+-- 
+2.2.1
+

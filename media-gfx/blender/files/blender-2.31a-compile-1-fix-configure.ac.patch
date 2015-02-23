@@ -1,0 +1,36 @@
+From 7b4e88b556f1246a8e78ba74a88efb513742ed1c Mon Sep 17 00:00:00 2001
+From: Sebastian Pipping <sebastian@pipping.org>
+Date: Thu, 28 Apr 2011 19:49:52 +0200
+Subject: [PATCH 1/6] Fix configure.ac
+
+Conflicts:
+
+	configure.ac
+---
+ configure.ac | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 6d5ebf8..4cdb83f 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -12,7 +12,7 @@ dnl --------------------
+ AC_PREREQ(2.12)
+ AC_INIT(blender, 2.29, )
+ AC_CANONICAL_SYSTEM
+-AM_INIT_AUTOMAKE([$PACKAGE_NAME], [$PACKAGE_VERSION])
++AM_INIT_AUTOMAKE([foreign])
+ AC_DISABLE_SHARED
+ 
+ dnl check for the platform make
+@@ -61,7 +61,6 @@ dnl -------------------
+   AC_PROG_CC
+   AC_PROG_LN_S
+   AC_PROG_LIBTOOL
+-  AC_PROG_RANLIB
+   AC_CHECK_TOOL([STRIP],[strip])
+   AC_PROG_AWK
+ 
+-- 
+2.2.1
+

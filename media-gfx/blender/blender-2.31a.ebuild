@@ -2,7 +2,9 @@
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/media-gfx/blender/Attic/blender-2.31a.ebuild,v 1.9 2005/01/03 12:41:13 lu_zero dead $
 
-inherit flag-o-matic eutils
+EAPI="5"
+
+inherit autotools flag-o-matic eutils
 replace-flags -march=pentium4 -march=pentium3
 
 IUSE="blender-game fmod sdl jpeg png mozilla truetype static"
@@ -30,16 +32,18 @@ DEPEND="virtual/x11
 	>=media-libs/libvorbis-1.0
 	>=dev-libs/openssl-0.9.6"
 
-src_unpack() {
-	unpack ${A}
+src_prepare() {
 	epatch ${FILESDIR}/configure-fix-${PV}.patch
 	epatch ${FILESDIR}/${P}-plugins.patch
+	epatch ${FILESDIR}/${P}-compile-*.patch
+	eautoreconf
+
 	cd ${S}/release/plugins
 	chmod 755 bmake
 }
 
 
-src_compile() {
+src_configure() {
 	local myconf=""
 
 	# SDL Support
@@ -69,10 +73,11 @@ src_compile() {
 	# use blender-plugin && myconf="${myconf} --enable-blenderplugin"
 
 	econf ${myconf} || die
-	emake || die
-	cd ${S}/release/plugins
-	emake || die
+}
 
+src_compile() {
+	emake || die
+	emake -C release/plugins || die
 }
 
 src_install() {
