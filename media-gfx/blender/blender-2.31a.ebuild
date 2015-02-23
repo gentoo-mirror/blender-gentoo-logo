@@ -5,8 +5,8 @@
 inherit flag-o-matic eutils
 replace-flags -march=pentium4 -march=pentium3
 
-IUSE="sdl jpeg png mozilla truetype static"
-#IUSE="${IUSE} blender-game blender-plugin"
+IUSE="blender-game fmod sdl jpeg png mozilla truetype static"
+#IUSE="${IUSE} blender-plugin"
 
 S=${WORKDIR}/${P}
 DESCRIPTION="3D Creation/Animation/Publishing System"
@@ -14,7 +14,7 @@ HOMEPAGE="http://www.blender.org/"
 SRC_URI="http://download.blender.org/source/${P}.tar.bz2"
 
 SLOT="0"
-LICENSE="|| (GPL-2 BL)"
+LICENSE="|| ( GPL-2 BL )"
 KEYWORDS="~x86 ~ppc"
 
 DEPEND="virtual/x11
