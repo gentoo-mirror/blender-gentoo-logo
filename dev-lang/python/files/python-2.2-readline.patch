@@ -1,0 +1,12 @@
+diff --git a/Modules/readline.c b/Modules/readline.c
+index fe653b8..a6b203e 100644
+--- a/Modules/readline.c
++++ b/Modules/readline.c
+@@ -93,7 +93,6 @@ read_history_file(PyObject *self, PyObject *args)
+ 	return Py_None;
+ }
+ 
+-static int history_length = -1; /* do not truncate history by default */
+ static char doc_read_history_file[] = "\
+ read_history_file([filename]) -> None\n\
+ Load a readline history file.\n\
