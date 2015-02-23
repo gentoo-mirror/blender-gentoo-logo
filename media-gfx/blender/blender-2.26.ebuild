@@ -24,7 +24,4 @@ DEPEND="virtual/x11
 	>=media-libs/libvorbis-1.0
 	>=dev-libs/openssl-0.9.6"
 
-
-src_install() {
-	emake install || die
 }
