@@ -117,6 +117,9 @@ src_compile() {
 
 src_install() {
 	dodir /usr
+
+	# Extra shot to workaround weird "Lib/plat-linux3" target error
+	make install prefix="${D}"/usr || true
 	make install prefix="${D}"/usr || die
 	rm "${D}/usr/bin/python" || die
 	dodoc README || die
