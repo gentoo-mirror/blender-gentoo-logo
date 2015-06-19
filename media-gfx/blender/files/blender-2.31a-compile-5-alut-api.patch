@@ -1,0 +1,30 @@
+From 597a14c62a3987af81fd91b9fc4331345319b9d2 Mon Sep 17 00:00:00 2001
+From: Sebastian Pipping <sebastian@pipping.org>
+Date: Thu, 5 May 2011 06:17:39 +0200
+Subject: [PATCH 5/6] Alut API fix
+
+---
+ intern/SoundSystem/openal/SND_OpenALDevice.cpp | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/intern/SoundSystem/openal/SND_OpenALDevice.cpp b/intern/SoundSystem/openal/SND_OpenALDevice.cpp
+index 5d7d7ba..5c44d2b 100644
+--- a/intern/SoundSystem/openal/SND_OpenALDevice.cpp
++++ b/intern/SoundSystem/openal/SND_OpenALDevice.cpp
+@@ -357,13 +357,7 @@ SND_WaveSlot* SND_OpenALDevice::LoadSample(const STR_String& name,
+ 				/* or from file? */
+ 				else
+ 				{
+-#ifdef WIN32
+ 					alutLoadWAVFile((signed char*)samplename.Ptr(), &sampleformat, &data, &numberofsamples, &samplerate, &loop);
+-#else
+-					alutLoadWAV((char*)samplename.Ptr(), &data,
+-						&sampleformat, &numberofsamples,
+-						&samplerate, &frequency);
+-#endif
+ 					/* put it in the buffer */
+ 					alBufferData(m_buffers[buffer], sampleformat, data, numberofsamples, samplerate);
+ 				}
+-- 
+2.2.1
+

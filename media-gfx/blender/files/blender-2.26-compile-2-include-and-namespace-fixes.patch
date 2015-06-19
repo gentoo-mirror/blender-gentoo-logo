@@ -1,0 +1,115 @@
+From 3d1dafd74440221d356b0a67ace6a40ce2969f1e Mon Sep 17 00:00:00 2001
+From: Sebastian Pipping <sebastian@pipping.org>
+Date: Thu, 28 Apr 2011 18:36:14 +0200
+Subject: [PATCH 2/6] C++: Include and namespace fixes
+
+---
+ intern/bsp/intern/BSP_CSGUserData.cpp                  | 2 +-
+ intern/iksolver/intern/IK_QSegment.cpp                 | 2 +-
+ intern/iksolver/intern/IK_Solver.cpp                   | 2 +-
+ intern/iksolver/intern/TNT/vec.h                       | 6 +++---
+ intern/string/STR_String.h                             | 2 ++
+ intern/string/intern/STR_String.cpp                    | 2 ++
+ source/blender/render/intern/include/RE_ShadowBuffer.h | 2 +-
+ 7 files changed, 11 insertions(+), 7 deletions(-)
+
+diff --git a/intern/bsp/intern/BSP_CSGUserData.cpp b/intern/bsp/intern/BSP_CSGUserData.cpp
+index 030202a..1d808ca 100755
+--- a/intern/bsp/intern/BSP_CSGUserData.cpp
++++ b/intern/bsp/intern/BSP_CSGUserData.cpp
+@@ -34,7 +34,7 @@
+ #endif
+ 
+ #include "BSP_CSGUserData.h"
+-
++#include <string.h>
+  
+ 
+ BSP_CSGUserData::
+diff --git a/intern/iksolver/intern/IK_QSegment.cpp b/intern/iksolver/intern/IK_QSegment.cpp
+index 5460c79..70eb8b7 100644
+--- a/intern/iksolver/intern/IK_QSegment.cpp
++++ b/intern/iksolver/intern/IK_QSegment.cpp
+@@ -42,7 +42,7 @@
+ #endif
+ 
+ #include "IK_QSegment.h"
+-#include <iostream.h>
++#include <iostream>
+ 
+ IK_QSegment::
+ IK_QSegment (
+diff --git a/intern/iksolver/intern/IK_Solver.cpp b/intern/iksolver/intern/IK_Solver.cpp
+index c029f8b..190c66e 100644
+--- a/intern/iksolver/intern/IK_Solver.cpp
++++ b/intern/iksolver/intern/IK_Solver.cpp
+@@ -44,7 +44,7 @@
+ #endif
+ #include "../extern/IK_solver.h"
+ 
+-#include <iostream.h>
++#include <iostream>
+ 
+ 	IK_Chain_ExternPtr  
+ IK_CreateChain(
+diff --git a/intern/iksolver/intern/TNT/vec.h b/intern/iksolver/intern/TNT/vec.h
+index 3c104f2..cfca1b0 100644
+--- a/intern/iksolver/intern/TNT/vec.h
++++ b/intern/iksolver/intern/TNT/vec.h
+@@ -296,11 +296,11 @@ std::ostream& operator<<(std::ostream &s, const Vector<T> &A)
+ {
+     Subscript N=A.dim();
+ 
+-    s <<  N << endl;
++    s <<  N << std::endl;
+ 
+     for (Subscript i=0; i<N; i++)
+-        s   << A[i] << " " << endl;
+-    s << endl;
++        s   << A[i] << " " << std::endl;
++    s << std::endl;
+ 
+     return s;
+ }
+diff --git a/intern/string/STR_String.h b/intern/string/STR_String.h
+index c711c4b..67c5ea3 100644
+--- a/intern/string/STR_String.h
++++ b/intern/string/STR_String.h
+@@ -47,6 +47,8 @@
+ 
+ #include <vector>
+ #include <limits.h>
++#include <string.h>
++#include <stdlib.h>
+ using namespace std;
+ 
+ 
+diff --git a/intern/string/intern/STR_String.cpp b/intern/string/intern/STR_String.cpp
+index 66f1fb3..98fac84 100644
+--- a/intern/string/intern/STR_String.cpp
++++ b/intern/string/intern/STR_String.cpp
+@@ -46,6 +46,8 @@
+ #include <config.h>
+ #endif
+ 
++#include <string.h>
++
+ /*-------------------------------------------------------------------------------------------------
+ 	Construction / destruction
+ -------------------------------------------------------------------------------------------------*/
+diff --git a/source/blender/render/intern/include/RE_ShadowBuffer.h b/source/blender/render/intern/include/RE_ShadowBuffer.h
+index 0eac797..c9ff56f 100644
+--- a/source/blender/render/intern/include/RE_ShadowBuffer.h
++++ b/source/blender/render/intern/include/RE_ShadowBuffer.h
+@@ -33,7 +33,7 @@
+ #ifndef RE_SHADOWBUFFER_H
+ #define RE_SHADOWBUFFER_H
+ 
+-#include <iostream.h>
++#include <iostream>
+ 
+ struct ShadBuf;
+ struct LampRen;
+-- 
+2.2.1
+

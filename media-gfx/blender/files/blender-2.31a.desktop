@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Blender
+Comment=3D modeling, animation, rendering and post-production.
+Exec=blender
+Icon=blender
+Terminal=false
+Type=Application
+Categories=Graphics;

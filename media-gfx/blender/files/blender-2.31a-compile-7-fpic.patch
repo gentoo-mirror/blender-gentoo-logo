@@ -1,0 +1,25 @@
+From 999d4faefa2a1a09eb6d99cdb7b213c0dd62f0a6 Mon Sep 17 00:00:00 2001
+From: Sebastian Pipping <sebastian@pipping.org>
+Date: Mon, 23 Feb 2015 19:48:56 +0100
+Subject: [PATCH] Address "recompile with -fPIC" linking error
+
+---
+ release/plugins/bmake | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/release/plugins/bmake b/release/plugins/bmake
+index 0023475..c83c51e 100755
+--- a/release/plugins/bmake
++++ b/release/plugins/bmake
+@@ -60,7 +60,7 @@ elif ( test $UNAME = "OpenBSD" ) then
+ 	LDFLAGS="-Bshareable";
+ elif ( test $UNAME = "Linux" ) then
+ 	CC="gcc";
+-#	CFLAGS="-fPIC -funsigned-char -O2";
++	CFLAGS="-fPIC -O2";
+ 
+ 	LD="ld";
+ 	LDFLAGS="-Bshareable";
+-- 
+2.2.1
+

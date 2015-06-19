@@ -1,0 +1,92 @@
+From 8aaccad904fcfd0329f45c999128dc7c2ba2a3c0 Mon Sep 17 00:00:00 2001
+From: Sebastian Pipping <sebastian@pipping.org>
+Date: Thu, 28 Apr 2011 18:38:15 +0200
+Subject: [PATCH 4/6] Python: Migrate from module regex to module re
+
+---
+ intern/python/freeze/makeconfig.py |  6 +++---
+ intern/python/freeze/parsesetup.py | 21 ++++++++++-----------
+ 2 files changed, 13 insertions(+), 14 deletions(-)
+
+diff --git a/intern/python/freeze/makeconfig.py b/intern/python/freeze/makeconfig.py
+index 5d1ba2c..11c97d8 100644
+--- a/intern/python/freeze/makeconfig.py
++++ b/intern/python/freeze/makeconfig.py
+@@ -1,4 +1,4 @@
+-import regex
++import re
+ 
+ 
+ # Write the config.c file
+@@ -6,8 +6,8 @@ import regex
+ never = ['marshal', '__main__', '__builtin__', 'sys', 'exceptions']
+ 
+ def makeconfig(infp, outfp, modules, with_ifdef=0):
+-	m1 = regex.compile('-- ADDMODULE MARKER 1 --')
+-	m2 = regex.compile('-- ADDMODULE MARKER 2 --')
++	m1 = re.compile('-- ADDMODULE MARKER 1 --')
++	m2 = re.compile('-- ADDMODULE MARKER 2 --')
+ 	while 1:
+ 		line = infp.readline()
+ 		if not line: break
+diff --git a/intern/python/freeze/parsesetup.py b/intern/python/freeze/parsesetup.py
+index 1795671..7cbb84e 100644
+--- a/intern/python/freeze/parsesetup.py
++++ b/intern/python/freeze/parsesetup.py
+@@ -1,6 +1,6 @@
+ # Parse Makefiles and Python Setup(.in) files.
+ 
+-import regex
++import re
+ import string
+ 
+ 
+@@ -8,19 +8,17 @@ import string
+ # Return a dictionary mapping names to values.
+ # May raise IOError.
+ 
+-makevardef = regex.compile('^\([a-zA-Z0-9_]+\)[ \t]*=\(.*\)')
++makevardef = re.compile('^([a-zA-Z0-9_]+)[ \t]*=(.*)')
+ 
+ def getmakevars(filename):
+ 	variables = {}
+ 	fp = open(filename)
+ 	try:
+-		while 1:
+-			line = fp.readline()
+-			if not line:
+-				break
+-			if makevardef.match(line) < 0:
++		for line in fp:
++			m = makevardef.match(line)
++			if m is None:
+ 				continue
+-			name, value = makevardef.group(1, 2)
++			name, value = m.group(1, 2)
+ 			# Strip trailing comment
+ 			i = string.find(value, '#')
+ 			if i >= 0:
+@@ -37,7 +35,7 @@ def getmakevars(filename):
+ # definitions, the second mapping variable names to their values.
+ # May raise IOError.
+ 
+-setupvardef = regex.compile('^\([a-zA-Z0-9_]+\)=\(.*\)')
++setupvardef = re.compile('^([a-zA-Z0-9_]+)=(.*)')
+ 
+ def getsetupinfo(filename):
+ 	modules = {}
+@@ -52,8 +50,9 @@ def getsetupinfo(filename):
+ 			i = string.find(line, '#')
+ 			if i >= 0:
+ 				line = line[:i]
+-			if setupvardef.match(line) >= 0:
+-				name, value = setupvardef.group(1, 2)
++			m = setupvardef.match(line)
++			if m is not None:
++				name, value = m.group(1, 2)
+ 				variables[name] = string.strip(value)
+ 			else:
+ 				words = string.split(line)
+-- 
+2.2.1
+
