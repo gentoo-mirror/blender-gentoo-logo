@@ -1,4 +1,4 @@
-# Copyright 1999-2013 Gentoo Foundation
+# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 # $Header: /var/cvsroot/gentoo-x86/dev-lang/python/Attic/python-2.2-r7.ebuild,v 1.12 2003/04/01 00:05:24 liquidx dead $
 
@@ -6,10 +6,10 @@ EAPI="2"
 
 MULTILIB_STRICT_DIRS=  # Dirty hack to bypass failing multilib-strict testing
 
-inherit eutils flag-o-matic
+inherit versionator eutils flag-o-matic
 
-PYVER_MAJOR="`echo ${PV} | cut -d '.' -f 1`"
-PYVER_MINOR="`echo ${PV} | cut -d '.' -f 2`"
+PYVER_MAJOR="$(get_version_component_range 1)"
+PYVER_MINOR="$(get_version_component_range 2)"
 PYVER="${PYVER_MAJOR}.${PYVER_MINOR}"
 
 DESCRIPTION="A really great language"
