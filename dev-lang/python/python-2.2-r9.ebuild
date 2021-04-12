@@ -1,32 +1,29 @@
-# Copyright 1999-2017 Gentoo Foundation
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/dev-lang/python/Attic/python-2.2-r7.ebuild,v 1.12 2003/04/01 00:05:24 liquidx dead $
 
-EAPI="2"
+EAPI="7"
 
 MULTILIB_STRICT_DIRS=  # Dirty hack to bypass failing multilib-strict testing
 
-inherit versionator eutils flag-o-matic
-
-PYVER_MAJOR="$(get_version_component_range 1)"
-PYVER_MINOR="$(get_version_component_range 2)"
+PYVER_MAJOR="$(ver_cut 1)"
+PYVER_MINOR="$(ver_cut 2)"
 PYVER="${PYVER_MAJOR}.${PYVER_MINOR}"
 
 DESCRIPTION="A really great language"
-HOMEPAGE="http://www.python.org"
+HOMEPAGE="https://www.python.org"
 SRC_URI="https://www.python.org/ftp/python/${PV}/Python-${PV}.tgz"
 
 SLOT="2.2"
 LICENSE="PSF-2.2"
 KEYWORDS="~amd64 ~sparc ~x86"
-IUSE="readline tk berkdb bootstrap"
+IUSE="build readline tk berkdb bootstrap"
 
 DEPEND="
 	>=sys-libs/zlib-1.1.3
 	readline? ( >=sys-libs/readline-4.1 >=sys-libs/ncurses-5.2 )
-	berkdb? ( >=sys-libs/db-3 )
+	berkdb? ( >=sys-libs/db-3:* )
 	tk? ( >=dev-lang/tk-8.0 )"
-RDEPEND="$DEPEND dev-python/python-fchksum"
+RDEPEND="$DEPEND"
 
 # The dev-python/python-fchksum RDEPEND is needed to that this python provides
 # the functionality expected from previous pythons.
@@ -89,7 +86,9 @@ src_prepare() {
 	scmd="$scmd  s:#\(resource .*\):\1:;" # Jeremy Hylton's rlimit interface
 	sed "$scmd" Modules/Setup.dist > Modules/Setup
 
-	epatch "${FILESDIR}"/${P}-readline.patch
+	eapply "${FILESDIR}"/${P}-readline.patch
+
+	eapply_user
 }
 
 src_configure() {
